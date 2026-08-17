@@ -9,7 +9,7 @@ namespace {
     constexpr int capShortcutMsgId{ 100 };
     // 配置文件的默认内容。空文件、坏 JSON、缺键都拿它兜底，所以这里列出的每一项
     // 都是代码里会直接按名字取的（见 getLang / getAutoStart / initShortcutKeys）
-    constexpr std::wstring_view defaultConfig{ LR"""({"common":{"autoStart":false,"language":"zh-CN"},"shortcutKey":{"cap":"Ctrl+Alt+A"}})""" };
+    constexpr std::wstring_view defaultConfig{ LR"""({"common":{"autoStart":false},"shortcutKey":{"cap":"Ctrl+Alt+A"}})""" };
 
     // 自己读文件而不用 Ling::Util::readFile：那个只认 UTF-16LE，而且是按字节数 resize 的，
     // 后面会跟着一半长度的 \0。用户拿记事本新建的 config.json 默认是 UTF-8，

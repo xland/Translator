@@ -109,11 +109,6 @@ void Tip::hide()
 	SendMessage(tipHwnd, TTM_ACTIVATE, FALSE, 0);
 }
 
-void Tip::excludeFromCapture()
-{
-	App::excludeFromCapture(tipHwnd);
-}
-
 SIZE Tip::measureText(const std::wstring& str)
 {
 	RECT rc{};
