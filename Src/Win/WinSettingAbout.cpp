@@ -1,0 +1,61 @@
+﻿#include "pch.h"
+#include "WinSetting.h"
+#include "WinSettingAbout.h"
+#include "../Util.h"
+
+WinSettingAbout::WinSettingAbout(Ling::WinBase* parent):Ling::Node(parent)
+{
+    std::vector<std::wstring> keys = { L"version",L"project",L"author" };
+    for (auto& key : keys)
+    {
+        auto box = makeChild<Ling::Node>();
+        box->setHeight(39.f);
+        box->setFlexDirection(Ling::FlexDirection::Row);
+        box->setAlignItems(Ling::Align::Center);
+
+        auto label = box->makeChild<Ling::Label>();
+        label->setText(L"about." + key);
+        label->setHeightPercent(100.f);
+        label->setJustifyContent(Ling::Justify::Center);
+        label->setFlexGrow(1.f);
+
+        auto btn = box->makeChild<Ling::Button>();
+        btn->setId(key);
+        if (key == L"version") {
+            btn->setText(Util::getVer());
+        }
+        else if (key == L"project") {
+            btn->setText(L"github.com/xland/ScreenCapture");
+            btn->setColor(0x597ef7ff);
+            btn->setHoverColor(0x597ef7ff);
+            btn->onClick.add([this](Ling::Button* btn) {
+                std::wstring downloadUrl{ L"https://github.com/xland/ScreenCapture" };
+                ShellExecute(win->hwnd, L"open", downloadUrl.data(), nullptr, nullptr, SW_SHOWNORMAL);
+                });
+        }
+        else {
+            btn->setText(L"about.wechat");
+            btn->setColor(0x597ef7ff);
+            btn->setHoverColor(0x597ef7ff);
+            btn->onClick.add([this](Ling::Button* btn) {
+                Ling::Util::setTextToClipboard(L"liulun_007");
+                MessageBox(win->hwnd, L"about.copySuccess", L"about.sysTip", MB_OK | MB_ICONINFORMATION);
+                });
+        }
+        btn->setAlignItems(Ling::Align::FlexEnd);
+        btn->setHeight(28.f);
+        btn->setWidth(120.f);
+        btn->setBg(0);
+        btn->setHoverBg(0);
+        btns.push_back(btn);
+
+        auto border = makeChild<Ling::Node>();
+        border->setHeight(1.f);
+        border->setBg(0xE0E0E0FF);
+    }
+}
+
+WinSettingAbout::~WinSettingAbout()
+{
+
+}
