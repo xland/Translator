@@ -96,35 +96,31 @@ namespace {
 
 WinSettingShortcut::WinSettingShortcut(Ling::WinBase* parent):Ling::Node(parent)
 {
-    std::vector<std::wstring> keys = { L"cap" };
-    for (auto& key:keys)
-    {
-        auto box = makeChild<Ling::Node>();
-        box->setHeight(39.f);
-        box->setFlexDirection(Ling::FlexDirection::Row);
-        box->setAlignItems(Ling::Align::Center);
+    auto box = makeChild<Ling::Node>();
+    box->setHeight(39.f);
+    box->setFlexDirection(Ling::FlexDirection::Row);
+    box->setAlignItems(Ling::Align::Center);
 
-        auto label = box->makeChild<Ling::Label>();
-        label->setText(L"shortcut." + key);
-        label->setHeightPercent(100.f);
-        label->setJustifyContent(Ling::Justify::Center);
-        label->setFlexGrow(1.f);
+    auto label = box->makeChild<Ling::Label>();
+    label->setText(L"快捷键");
+    label->setHeightPercent(100.f);
+    label->setJustifyContent(Ling::Justify::Center);
+    label->setFlexGrow(1.f);
 
-        auto btn = box->makeChild<Ling::Button>();
-        btn->setId(key);
-        btn->setText(Setting::get()->getShortcutKey(key));
-        btn->setHeight(28.f);
-        btn->setWidth(120.f);
-        btn->setBg(0xFFFFFFFF);
-        btn->setHoverBg(0xFFFFFFFF);
-        btn->setBorder(1.f, 0xE0E0E0FF);
-        btn->onClick.add([this](Ling::Button* btn) {this->onBtnClick(btn);});
-        btns.push_back(btn);
+    auto btn = box->makeChild<Ling::Button>();
+    btn->setId(L"keyPressInput");
+    btn->setText(Setting::get()->getShortcutKey(L"translate"));
+    btn->setHeight(28.f);
+    btn->setWidth(120.f);
+    btn->setBg(0xFFFFFFFF);
+    btn->setHoverBg(0xFFFFFFFF);
+    btn->setBorder(1.f, 0xE0E0E0FF);
+    btn->onClick.add([this](Ling::Button* btn) {this->onBtnClick(btn);});
+    btns.push_back(btn);
 
-        auto border = makeChild<Ling::Node>();
-        border->setHeight(1.f);
-        border->setBg(0xE0E0E0FF);
-    }
+    auto border = makeChild<Ling::Node>();
+    border->setHeight(1.f);
+    border->setBg(0xE0E0E0FF);
 
     auto weakThis = getWeakThis();
     onKeyDownToken = win->onKeyDown.add([this,weakThis](UINT key) {
@@ -157,12 +153,6 @@ WinSettingShortcut::~WinSettingShortcut()
 
 void WinSettingShortcut::onBtnClick(Ling::Button* btn)
 {
-    // 再次点击当前正在捕获的按钮 → 取消
-    if (curKey == btn->id) {
-        endCapture();
-        return;
-    }
-    // 已经在捕获别的按钮 → 先复位旧的
     if (!curKey.empty()) {
         endCapture();
     }
@@ -173,7 +163,7 @@ void WinSettingShortcut::beginCapture(Ling::Button* btn)
 {
     curKey = btn->id;
     tempKeys.clear();
-    btn->setText(L"shortcut.pressKey");
+    btn->setText(L"请按键...");
 }
 
 void WinSettingShortcut::endCapture()

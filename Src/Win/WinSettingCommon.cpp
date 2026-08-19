@@ -28,7 +28,7 @@ void WinSettingCommon::initAutoStartCtrls()
     box->setAlignItems(Ling::Align::Center);
 
     auto label = box->makeChild<Ling::Label>();
-    label->setText(L"setting.autoStart");
+    label->setText(L"开机自启动");
     label->setHeightPercent(100.f);
     label->setJustifyContent(Ling::Justify::Center);
     label->setFlexGrow(1.f);

@@ -89,16 +89,16 @@ void WinSetting::initMenuItems(Ling::Node* menuBox)
 			menuItem->setBg(0x597ef7ff);
 			menuItem->setHoverColor(0xFFFFFFFF);
 			menuItem->setHoverBg(0x597ef7ff);
-			menuItem->setText(L"setting.common");
+			menuItem->setText(L"通用");
 		}
 		else {
 			menuItem->setHoverColor(0x000000ff);
 			menuItem->setHoverBg(0xE1E1E3ff);
 			if (i == 1) {
-				menuItem->setText(L"setting.shortcut");
+				menuItem->setText(L"快捷键");
 			}
 			else if (i == 2) {
-				menuItem->setText(L"setting.about");
+				menuItem->setText(L"关于");
 			}
 		}
 		menuItem->onClick.add([this](auto menuItem) {this->onMenuItemClick(menuItem);});

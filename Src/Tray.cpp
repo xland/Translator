@@ -13,7 +13,7 @@ namespace {
 Tray::Tray()
 {
 	auto lingApp = Ling::App::get();
-	lingApp->initTray(100, L"Screen Capture");
+	lingApp->initTray(100, L"Translator");
 	Setting::get()->initShortcutKeys();
 	// 左键单击 / 双击 都进入截图
 	lingApp->onTrayMouseEvent.add([this](bool isDown, bool isRight) {
@@ -44,8 +44,8 @@ Tray* Tray::get()
 void Tray::onTrayRightClick()
 {
 	auto menu = CreatePopupMenu();
-	AppendMenu(menu, MF_STRING, settingMsg, L"tray.setting");
-	AppendMenu(menu, MF_STRING, exitMsg, L"tray.exit");
+	AppendMenu(menu, MF_STRING, settingMsg, L"设置");
+	AppendMenu(menu, MF_STRING, exitMsg, L"退出");
 	auto menuId = Ling::App::get()->popupMenu(menu);
 	if (menuId == settingMsg)
 	{

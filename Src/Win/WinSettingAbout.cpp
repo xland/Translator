@@ -5,7 +5,7 @@
 
 WinSettingAbout::WinSettingAbout(Ling::WinBase* parent):Ling::Node(parent)
 {
-    std::vector<std::wstring> keys = { L"version",L"project",L"author" };
+    std::vector<std::wstring> keys = { L"版本号",L"项目",L"作者" };
     for (auto& key : keys)
     {
         auto box = makeChild<Ling::Node>();
@@ -14,17 +14,17 @@ WinSettingAbout::WinSettingAbout(Ling::WinBase* parent):Ling::Node(parent)
         box->setAlignItems(Ling::Align::Center);
 
         auto label = box->makeChild<Ling::Label>();
-        label->setText(L"about." + key);
+        label->setText(key);
         label->setHeightPercent(100.f);
         label->setJustifyContent(Ling::Justify::Center);
         label->setFlexGrow(1.f);
 
         auto btn = box->makeChild<Ling::Button>();
         btn->setId(key);
-        if (key == L"version") {
+        if (key == L"版本号") {
             btn->setText(Util::getVer());
         }
-        else if (key == L"project") {
+        else if (key == L"项目") {
             btn->setText(L"github.com/xland/ScreenCapture");
             btn->setColor(0x597ef7ff);
             btn->setHoverColor(0x597ef7ff);
@@ -34,12 +34,12 @@ WinSettingAbout::WinSettingAbout(Ling::WinBase* parent):Ling::Node(parent)
                 });
         }
         else {
-            btn->setText(L"about.wechat");
+            btn->setText(L"微信");
             btn->setColor(0x597ef7ff);
             btn->setHoverColor(0x597ef7ff);
             btn->onClick.add([this](Ling::Button* btn) {
                 Ling::Util::setTextToClipboard(L"liulun_007");
-                MessageBox(win->hwnd, L"about.copySuccess", L"about.sysTip", MB_OK | MB_ICONINFORMATION);
+                MessageBox(win->hwnd, L"复制成功", L"系统提示", MB_OK | MB_ICONINFORMATION);
                 });
         }
         btn->setAlignItems(Ling::Align::FlexEnd);

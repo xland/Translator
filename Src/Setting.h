@@ -33,9 +33,6 @@ private:
 	// 都可能缺键，而代码里有几处是直接按名字取的，缺一个就抛异常。
 	// 返回是否补过东西 —— 补过就得落盘
 	bool ensureDefaults();
-	// toolPin.<tool> 那个 JsonObject。缺哪一层就现建一层挂上去 ——
-	// SetNamedValue 得有个落脚的对象，而这两层在旧配置文件里都不存在
-	JsonObject getToolObj(const std::wstring& tool);
 	std::filesystem::path initDataPath();
 	// 决定配置文件用哪一份：exe 同目录有 config.json 就用它（绿色版，配置跟着程序走），
 	// 否则用 %appdata%\ScreenCapture\config.json。二者只认一个，读哪儿就写哪儿。
