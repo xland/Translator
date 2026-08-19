@@ -35,7 +35,7 @@ private:
 	bool ensureDefaults();
 	std::filesystem::path initDataPath();
 	// 决定配置文件用哪一份：exe 同目录有 config.json 就用它（绿色版，配置跟着程序走），
-	// 否则用 %appdata%\ScreenCapture\config.json。二者只认一个，读哪儿就写哪儿。
+	// 否则用 %appdata%\Translator\config.json。二者只认一个，读哪儿就写哪儿。
 	std::filesystem::path initConfigPath();
 	void save();
 private:

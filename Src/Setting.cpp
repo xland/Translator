@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include <include/Ling.h>
+#include "ClipboardText.h"
 #include "Setting.h"
+#include "Win/WinApi.h"
 #include "Util.h"
 #include "App.h"
 
@@ -31,11 +33,13 @@ bool Setting::loadConfig()
         // 空文件、写坏的 JSON、根节点不是对象（比如一个数组）都会失败，这里一律当没读到
         if (JsonObject::TryParse(content, obj)) {
             configObj = obj;
+            WinApi::init();
             return true;
         }
-        MessageBox(nullptr, L"config.json parse error，use default config", L"ScreenCapture", MB_OK | MB_ICONWARNING);
+        MessageBox(nullptr, L"config.json parse error，use default config", L"Translator", MB_OK | MB_ICONWARNING);
     }
     configObj = JsonObject::Parse(defaultConfig); //字面量，不会失败
+    WinApi::init();
     return false;
 }
 
@@ -127,14 +131,14 @@ void Setting::setAutoStart(bool autoStart)
         std::wstring commandLine = std::format(L"\"{}\" --auto-start", curPath.wstring());
         HKEY hKey;
         if (RegOpenKeyEx(HKEY_CURRENT_USER, runKey.data(), 0, KEY_WRITE, &hKey) == ERROR_SUCCESS) {
-            RegSetValueEx(hKey, L"ScreenCapture", 0, REG_SZ, (const BYTE*)commandLine.data(), (commandLine.size() + 1) * sizeof(wchar_t));
+            RegSetValueEx(hKey, L"Translator", 0, REG_SZ, (const BYTE*)commandLine.data(), (commandLine.size() + 1) * sizeof(wchar_t));
             RegCloseKey(hKey);
         }
     }
     else {
         HKEY hKey;
         if (RegOpenKeyEx(HKEY_CURRENT_USER, runKey.data(), 0, KEY_WRITE, &hKey) == ERROR_SUCCESS) {
-            RegDeleteValue(hKey, L"ScreenCapture");
+            RegDeleteValue(hKey, L"Translator");
             RegCloseKey(hKey);
         }
     }
@@ -159,7 +163,7 @@ std::filesystem::path Setting::initDataPath()
     }
     auto dataPath = std::filesystem::path{ pathTmp };
     CoTaskMemFree(pathTmp);
-    dataPath.append("ScreenCapture");
+    dataPath.append("Translator");
     if (!std::filesystem::exists(dataPath)) {
         if (!std::filesystem::create_directories(dataPath)) {
             _ASSERT_EXPR(FALSE, L"create data path，error");
@@ -213,7 +217,7 @@ void Setting::initShortcutKeys()
 
     lingApp->onHotKey.add([this](UINT msg) {
         if (msg == capShortcutMsgId) {
-
+            //auto text = ClipboardText::grab();
         }
     });
     lingApp->onSecondInstance.add([this]() {

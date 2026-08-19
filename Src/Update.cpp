@@ -22,10 +22,10 @@ namespace {
 
 	constexpr std::wstring_view versionUrl{ L"https://screen-capture-1300696206.cos.ap-chengdu.myqcloud.com/TranslatorVersion.json" };
 	constexpr std::wstring_view exeUrl{ L"https://screen-capture-1300696206.cos.ap-chengdu.myqcloud.com/Translator.exe" };
-	constexpr std::wstring_view releaseUrl{ L"https://github.com/xland/ScreenCapture/releases" };
+	constexpr std::wstring_view releaseUrl{ L"https://github.com/xland/Translator/releases" };
 	// 下载下来的新版 exe 就叫这个名字。跟正式的 exe 名字区分开 —— 用户可能把 exe 改过名，
 	// 覆盖的时候按当前 exe 的实际路径来，不能按这个名字来
-	constexpr std::wstring_view newExeName{ L"ScreenCapture.update.exe" };
+	constexpr std::wstring_view newExeName{ L"Translator.update.exe" };
 
 	bool checked{ false };              //一次运行只查一次服务端，查过就不再动了
 	UINT_PTR checkTimer{ 0 };

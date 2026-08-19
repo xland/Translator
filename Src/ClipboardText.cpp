@@ -268,10 +268,3 @@ ClipboardText::Result ClipboardText::grab(const Options& opt)
 	freeItems(backup);
 	return result;
 }
-
-ClipboardText::Result ClipboardText::read(HWND owner)
-{
-	Result result;
-	result.status = readClipboardText(owner, result.text) ? Status::Ok : Status::NoText;
-	return result;
-}

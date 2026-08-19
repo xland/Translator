@@ -174,6 +174,11 @@
     <ClCompile Include="Tray.cpp" />
     <ClCompile Include="Update.cpp" />
     <ClCompile Include="Util.cpp" />
+    <ClCompile Include="Win\WinApi.cpp" />
+    <ClCompile Include="Win\WinApiALi.cpp" />
+    <ClCompile Include="Win\WinApiBaiDu.cpp" />
+    <ClCompile Include="Win\WinApiTengXun.cpp" />
+    <ClCompile Include="Win\WinApiYouDao.cpp" />
     <ClCompile Include="Win\WinSettingAbout.cpp" />
     <ClCompile Include="Win\WinSettingCommon.cpp" />
     <ClCompile Include="Win\WinSetting.cpp" />
@@ -194,6 +199,11 @@
     <ClInclude Include="Tray.h" />
     <ClInclude Include="Update.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="Win\WinApi.h" />
+    <ClInclude Include="Win\WinApiALi.h" />
+    <ClInclude Include="Win\WinApiBaiDu.h" />
+    <ClInclude Include="Win\WinApiTengXun.h" />
+    <ClInclude Include="Win\WinApiYouDao.h" />
     <ClInclude Include="Win\WinSettingAbout.h" />
     <ClInclude Include="Win\WinSettingCommon.h" />
     <ClInclude Include="Win\WinSetting.h" />

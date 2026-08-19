@@ -49,8 +49,4 @@ public:
 	// 会阻塞最多 timeoutMs 毫秒，别直接在 UI 线程上调 —— 放到工作线程里去，
 	// 拿到结果再 PostMessage 回 UI 线程
 	static Result grab(const Options& opt = {});
-
-	// 只读当前剪贴板里的文本，不发按键、不动剪贴板内容。
-	// 给"监听 Ctrl+C+C 连按"那种触发方式用 —— 那条路上按键是用户自己按的，不用我们模拟
-	static Result read(HWND owner = nullptr);
 };

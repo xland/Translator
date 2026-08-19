@@ -25,11 +25,11 @@ WinSettingAbout::WinSettingAbout(Ling::WinBase* parent):Ling::Node(parent)
             btn->setText(Util::getVer());
         }
         else if (key == L"项目") {
-            btn->setText(L"github.com/xland/ScreenCapture");
+            btn->setText(L"github.com/xland/Translator");
             btn->setColor(0x597ef7ff);
             btn->setHoverColor(0x597ef7ff);
             btn->onClick.add([this](Ling::Button* btn) {
-                std::wstring downloadUrl{ L"https://github.com/xland/ScreenCapture" };
+                std::wstring downloadUrl{ L"https://github.com/xland/Translator" };
                 ShellExecute(win->hwnd, L"open", downloadUrl.data(), nullptr, nullptr, SW_SHOWNORMAL);
                 });
         }
