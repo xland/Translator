@@ -5,6 +5,7 @@
 #include "Win/WinApi.h"
 #include "Util.h"
 #include "App.h"
+#include "Adapter/BaiDu.h"
 
 namespace {
     std::unique_ptr<Setting> setting;
@@ -187,7 +188,17 @@ void Setting::initShortcutKeys()
 
     lingApp->onHotKey.add([this](UINT msg) {
         if (msg == capShortcutMsgId) {
-            //auto text = ClipboardText::grab();
+            auto result = ClipboardText::grab();
+            if (result.ok() && !result.text.empty()) {
+                try {
+                    BaiDu baidu;
+                    auto translated = baidu.translate(result.text);
+                    // 翻译结果在 translated 变量中，可通过断点查看
+                }
+                catch (...) {
+                    // 翻译失败，暂时不处理
+                }
+            }
         }
     });
     lingApp->onSecondInstance.add([this]() {

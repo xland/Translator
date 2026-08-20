@@ -162,7 +162,6 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Adapter\AdapterBase.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Adapter\BaiDu.cpp" />
     <ClCompile Include="ClipboardText.cpp" />

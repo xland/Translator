@@ -1,9 +1,9 @@
 #pragma once
+#include <string>
 class AdapterBase
 {
 public:
-	AdapterBase();
-	~AdapterBase();
-private:
+	virtual ~AdapterBase() = default;
+	virtual std::wstring translate(const std::wstring& text) = 0;
 };
 

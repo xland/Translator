@@ -3,7 +3,6 @@
 class BaiDu :public AdapterBase
 {
 public:
-	BaiDu();
-	~BaiDu();
+	std::wstring translate(const std::wstring& text) override;
 };
 
