@@ -19,19 +19,16 @@ Setting::Setting() :dataPath{ initDataPath() }, configPath{ initConfigPath() }
         if (content.empty() || content.find_first_not_of(L" \t\r\n") == std::wstring::npos) {
             initDefaultConfig();
             save();
-            WinApi::init();
             return;
         }
         JsonObject obj{ nullptr };
         if (JsonObject::TryParse(content, obj)) {
             configObj = obj;
-
             return;
         }
         MessageBox(nullptr, L"config.json parse error，use default config", L"ScreenCapture", MB_OK | MB_ICONWARNING);
     }
     initDefaultConfig();
-    WinApi::init();
 }
 
 Setting::~Setting()
@@ -42,6 +39,7 @@ void Setting::init()
 {
     auto ptr = new Setting();
     setting.reset(ptr);
+    WinApi::init();
 }
 
 void Setting::dispose()
@@ -195,4 +193,24 @@ void Setting::initShortcutKeys()
     lingApp->onSecondInstance.add([this]() {
 
     });
+}
+
+std::wstring Setting::getApiConfig(const std::wstring& provider, const std::wstring& key)
+{
+    auto flag = configObj.HasKey(L"api");
+    auto api = configObj.GetNamedObject(L"api", nullptr);
+    if (!api) return L"";
+    auto providerObj = api.GetNamedObject(provider, nullptr);
+    if (!providerObj) return L"";
+    return std::wstring{ providerObj.GetNamedString(key, L"") };
+}
+
+void Setting::setApiConfig(const std::wstring& provider, const std::wstring& key, const std::wstring& value)
+{
+    auto api = configObj.GetNamedObject(L"api", nullptr);
+    if (!api) return;
+    auto providerObj = api.GetNamedObject(provider, nullptr);
+    if (!providerObj) return;
+    providerObj.SetNamedValue(key, JsonValue::CreateStringValue(value));
+    save();
 }

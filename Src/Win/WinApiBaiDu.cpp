@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "WinApiBaiDu.h"
+#include "../Setting.h"
 
 WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
 {
@@ -41,13 +42,17 @@ WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
         label->setJustifyContent(Ling::Justify::Center);
         label->setFlexGrow(1.f);
 
-        auto textbox = box->makeChild<Ling::TextBox>();
-        textbox->setSize(180.f, 26.f);
-        textbox->setFontSize(13.f);
-        textbox->setPadding(5.f,0.f,5.f,0.f);
-        textbox->setBg(0xFCFCFCFF);
-        textbox->setVerticalCenter(true);
-        textbox->setBorder(1.f, 0xD9D9D9FF);
+        appIdBox = box->makeChild<Ling::TextBox>();
+        appIdBox->setSize(260.f, 26.f);
+        appIdBox->setFontSize(13.f);
+        appIdBox->setPadding(5.f,0.f,5.f,0.f);
+        appIdBox->setBg(0xFCFCFCFF);
+        appIdBox->setVerticalCenter(true);
+        appIdBox->setBorder(1.f, 0xD9D9D9FF);
+        appIdBox->setText(Setting::get()->getApiConfig(L"baidu", L"appId"));
+        onAppIdChangeToken = appIdBox->onTextChanged.add([this](Ling::TextBox* tb, const std::wstring& text) {
+            Setting::get()->setApiConfig(L"baidu", L"appId", text);
+        });
 
         auto border = makeChild<Ling::Node>();
         border->setHeight(1.f);
@@ -66,13 +71,17 @@ WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
         label->setJustifyContent(Ling::Justify::Center);
         label->setFlexGrow(1.f);
 
-        auto textbox = box->makeChild<Ling::TextBox>();
-        textbox->setSize(180.f, 26.f);
-        textbox->setFontSize(13.f);
-        textbox->setPadding(5.f, 0.f, 5.f, 0.f);
-        textbox->setBg(0xFCFCFCFF);
-        textbox->setVerticalCenter(true);
-        textbox->setBorder(1.f, 0xD9D9D9FF);
+        apiKeyBox = box->makeChild<Ling::TextBox>();
+        apiKeyBox->setSize(260.f, 26.f);
+        apiKeyBox->setFontSize(13.f);
+        apiKeyBox->setPadding(5.f, 0.f, 5.f, 0.f);
+        apiKeyBox->setBg(0xFCFCFCFF);
+        apiKeyBox->setVerticalCenter(true);
+        apiKeyBox->setBorder(1.f, 0xD9D9D9FF);
+        apiKeyBox->setText(Setting::get()->getApiConfig(L"baidu", L"apiKey"));
+        onApiKeyChangeToken = apiKeyBox->onTextChanged.add([this](Ling::TextBox* tb, const std::wstring& text) {
+            Setting::get()->setApiConfig(L"baidu", L"apiKey", text);
+        });
 
         auto border = makeChild<Ling::Node>();
         border->setHeight(1.f);
@@ -91,13 +100,24 @@ WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
         label->setJustifyContent(Ling::Justify::Center);
         label->setFlexGrow(1.f);
 
-        auto textbox = box->makeChild<Ling::TextBox>();
-        textbox->setSize(80.f, 26.f);
-        textbox->setPadding(5.f, 0.f, 5.f, 0.f);
-        textbox->setBg(0xFCFCFCFF);
-        textbox->setVerticalCenter(true);
-        textbox->setBorder(1.f, 0xD9D9D9FF);
-        textbox->setText(L"100");
+        priorityBox = box->makeChild<Ling::TextBox>();
+        priorityBox->setSize(80.f, 26.f);
+        priorityBox->setPadding(5.f, 0.f, 5.f, 0.f);
+        priorityBox->setBg(0xFCFCFCFF);
+        priorityBox->setVerticalCenter(true);
+        priorityBox->setBorder(1.f, 0xD9D9D9FF);
+        auto orderVal = Setting::get()->getApiConfig(L"baidu", L"order");
+        priorityBox->setText(orderVal.empty() ? L"100" : orderVal);
+        onPriorityChangeToken = priorityBox->onTextChanged.add([this](Ling::TextBox* tb, const std::wstring& text) {
+            if (text.empty()) return;
+            try {
+                std::stol(text);
+                Setting::get()->setApiConfig(L"baidu", L"order", text);
+            }
+            catch (...) {
+                // 输入的不是数字，不保存
+            }
+        });
 
         auto border = makeChild<Ling::Node>();
         border->setHeight(1.f);
@@ -108,4 +128,7 @@ WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
 
 WinApiBaiDu::~WinApiBaiDu()
 {
+    if (appIdBox) appIdBox->onTextChanged.remove(onAppIdChangeToken);
+    if (apiKeyBox) apiKeyBox->onTextChanged.remove(onApiKeyChangeToken);
+    if (priorityBox) priorityBox->onTextChanged.remove(onPriorityChangeToken);
 }
