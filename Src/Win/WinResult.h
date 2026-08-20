@@ -9,6 +9,7 @@ public:
 private:
 	void onCreated() override;
 	LRESULT onHitTest(const POINT pos) override;
+	void onMinMaxInfo(MINMAXINFO* mmi) override;
 private:
 	std::wstring sourceText;
 	std::wstring resultText;

@@ -5,7 +5,7 @@ WinResult::WinResult(const std::wstring& source, const std::wstring& result)
 	:Ling::WinBase(), sourceText(source), resultText(result)
 {
 	setTitle(L"翻译结果");
-	setSize(800, 600);
+	setSize(500, 320);
 	setCenter();
 	createNativeWindow();
 }
@@ -45,10 +45,14 @@ void WinResult::onCreated()
 			});
 	}
 	{
-		sourceBox = body->makeChild<Ling::TextBox>();
-		sourceBox->setFlexGrow(1.0);
+		auto box = body->makeChild<Ling::Node>();
+		box->setFlexGrow(1.0);
+		box->setWidthPercent(100.f);
+		box->setPadding(12.f, 12.f, 12.f, 6.f);
+		box->setFlexDirection(Ling::FlexDirection::Column);
+		sourceBox = box->makeChild<Ling::TextBox>();
+		sourceBox->setFlexGrow(1.f);
 		sourceBox->setWidthPercent(100.f);
-		sourceBox->setMargin(12.f, 8.f, 12.f, 8.f);
 		sourceBox->setFontSize(13.f);
 		sourceBox->setPadding(8.f);
 		sourceBox->setBg(0xFFFFFFFF);
@@ -56,11 +60,14 @@ void WinResult::onCreated()
 		sourceBox->setText(sourceText);
 	}
 	{
-		// 结果 TextBox
-		resultBox = body->makeChild<Ling::TextBox>();
+		auto box = body->makeChild<Ling::Node>();
+		box->setFlexGrow(1.0);
+		box->setWidthPercent(100.f);
+		box->setPadding(12.f,6.f,12.f,12.f);
+		box->setFlexDirection(Ling::FlexDirection::Column);
+		resultBox = box->makeChild<Ling::TextBox>();
 		resultBox->setFlexGrow(1.0);
-		sourceBox->setWidthPercent(100.f);
-		resultBox->setMargin(12.f, 8.f, 12.f, 8.f);
+		resultBox->setWidthPercent(100.f);
 		resultBox->setFontSize(13.f);
 		resultBox->setPadding(8.f);
 		resultBox->setBg(0xFFFFFFFF);
@@ -82,4 +89,16 @@ LRESULT WinResult::onHitTest(const POINT pos)
 		return HTCAPTION;
 	}
 	return HTCLIENT;
+}
+
+void WinResult::onMinMaxInfo(MINMAXINFO* mmi)
+{
+	RECT workAreaRect;
+	BOOL getWorkAreaSuccess = SystemParametersInfo(SPI_GETWORKAREA, 0, &workAreaRect, 0);
+	mmi->ptMaxPosition.x = workAreaRect.left;
+	mmi->ptMaxPosition.y = workAreaRect.top;
+	mmi->ptMaxSize.x = workAreaRect.right - workAreaRect.left;
+	mmi->ptMaxSize.y = workAreaRect.bottom - workAreaRect.top;
+	mmi->ptMinTrackSize.x = 300;
+	mmi->ptMinTrackSize.y = 200;
 }
