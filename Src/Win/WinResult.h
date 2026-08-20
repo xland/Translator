@@ -4,12 +4,14 @@
 class WinResult :public Ling::WinBase
 {
 public:
-	WinResult();
+	WinResult(const std::wstring& source, const std::wstring& result);
 	~WinResult();
 private:
 	void onCreated() override;
 	LRESULT onHitTest(const POINT pos) override;
 private:
-	int menuIndex{ 0 };
-	Ling::Node* content{ nullptr };
+	std::wstring sourceText;
+	std::wstring resultText;
+	Ling::TextBox* sourceBox{ nullptr };
+	Ling::TextBox* resultBox{ nullptr };
 };

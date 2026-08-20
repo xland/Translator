@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "WinResult.h"
 
-
-WinResult::WinResult() :Ling::WinBase()
+WinResult::WinResult(const std::wstring& source, const std::wstring& result)
+	:Ling::WinBase(), sourceText(source), resultText(result)
 {
-	setTitle(L"API");
-	setSize(680, 560);
+	setTitle(L"翻译结果");
+	setSize(800, 600);
 	setCenter();
 	createNativeWindow();
 }
@@ -18,10 +18,57 @@ void WinResult::onCreated()
 {
 	enableShadow();
 	body->setBg(0xFAFAFAFF);
-	body->setFlexDirection(Ling::FlexDirection::Row);	
+	body->setFlexDirection(Ling::FlexDirection::Column);
+	{
+		auto titleBar = body->makeChild<Ling::Node>();
+		titleBar->setHeight(32.f);
+		titleBar->setWidthPercent(100.f);
+		titleBar->setBg(0xE6E6E6FF);
+		titleBar->setFlexDirection(Ling::FlexDirection::Row);
+
+		auto titleBox = titleBar->makeChild<Ling::Node>();
+		titleBox->setJustifyContent(Ling::Justify::Center);
+		titleBox->setAlignItems(Ling::Align::FlexStart);
+		titleBox->setPaddingLeft(12.f);
+		titleBox->setFlexGrow(1.f);
+		auto titleText = titleBox->makeChild<Ling::Label>();
+		titleText->setText(L"翻译结果");
+
+		auto closeBtn = titleBar->makeChild<Ling::Button>();
+		closeBtn->setSize(42.f, 32.f);
+		closeBtn->setHoverColor(0xFFFFFFFF);
+		closeBtn->setHoverBg(0xE81123FF);
+		closeBtn->setText(L"\ue62d");
+		closeBtn->setFontFamily(L"icon");
+		closeBtn->onClick.add([](Ling::Button* btn) {
+			btn->win->close();
+			});
+	}
+	{
+		sourceBox = body->makeChild<Ling::TextBox>();
+		sourceBox->setFlexGrow(1.0);
+		sourceBox->setWidthPercent(100.f);
+		sourceBox->setMargin(12.f, 8.f, 12.f, 8.f);
+		sourceBox->setFontSize(13.f);
+		sourceBox->setPadding(8.f);
+		sourceBox->setBg(0xFFFFFFFF);
+		sourceBox->setBorder(1.f, 0xD9D9D9FF);
+		sourceBox->setText(sourceText);
+	}
+	{
+		// 结果 TextBox
+		resultBox = body->makeChild<Ling::TextBox>();
+		resultBox->setFlexGrow(1.0);
+		sourceBox->setWidthPercent(100.f);
+		resultBox->setMargin(12.f, 8.f, 12.f, 8.f);
+		resultBox->setFontSize(13.f);
+		resultBox->setPadding(8.f);
+		resultBox->setBg(0xFFFFFFFF);
+		resultBox->setBorder(1.f, 0xD9D9D9FF);
+		resultBox->setText(resultText);
+	}
 	show();
 }
-
 
 LRESULT WinResult::onHitTest(const POINT pos)
 {
@@ -31,10 +78,7 @@ LRESULT WinResult::onHitTest(const POINT pos)
 		auto result = borderHitTest(pt);
 		if (result != HTCLIENT) return result;
 	}
-	if (pt.x > 0 && pt.y > 0 && pt.x < w - 32 * dpi && pt.y < 40 * dpi) {
-		return HTCAPTION;
-	}
-	if (pt.x > 0 && pt.y > 40*5*dpi && pt.x < 160 * dpi && pt.y < h) {
+	if (pt.x > 0 && pt.y > 0 && pt.x < w - 42 * dpi && pt.y < 40 * dpi) {
 		return HTCAPTION;
 	}
 	return HTCLIENT;

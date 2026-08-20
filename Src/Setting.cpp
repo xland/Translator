@@ -3,6 +3,7 @@
 #include "ClipboardText.h"
 #include "Setting.h"
 #include "Win/WinApi.h"
+#include "Win/WinResult.h"
 #include "Util.h"
 #include "App.h"
 #include "Adapter/BaiDu.h"
@@ -193,7 +194,7 @@ void Setting::initShortcutKeys()
                 try {
                     BaiDu baidu;
                     auto translated = baidu.translate(result.text);
-                    // 翻译结果在 translated 变量中，可通过断点查看
+                    new WinResult(result.text, translated);
                 }
                 catch (...) {
                     // 翻译失败，暂时不处理
