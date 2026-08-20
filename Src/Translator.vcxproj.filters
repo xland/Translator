@@ -69,6 +69,12 @@
     <ClCompile Include="Win\WinApiYouDao.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Adapter\BaiDu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Adapter\AdapterBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Res\Resource.rc">
@@ -132,8 +138,17 @@
     <ClInclude Include="Win\WinApiTengXun.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Adapter\BaiDu.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Adapter\AdapterBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\config.json" />
   </ItemGroup>
 </Project>

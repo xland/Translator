@@ -9,61 +9,29 @@
 namespace {
     std::unique_ptr<Setting> setting;
     constexpr int capShortcutMsgId{ 100 };
-    // 配置文件的默认内容。空文件、坏 JSON、缺键都拿它兜底，所以这里列出的每一项
-    // 都是代码里会直接按名字取的（见 getLang / getAutoStart / initShortcutKeys）
-    constexpr std::wstring_view defaultConfig{ LR"""({"common":{"autoStart":false},"shortcutKey":{"translate":"Ctrl+Alt+Z"}})""" };
 }
 
 
 Setting::Setting() :dataPath{ initDataPath() }, configPath{ initConfigPath() }
 {
-    // 分两句写而不是 dirty = !loadConfig() || ensureDefaults()：那样 ensureDefaults 会被短路掉
-    bool dirty = !loadConfig();
-    if (ensureDefaults()) dirty = true;
-    // 回落到默认值或补过键就写回去：下次启动不用再兜底一遍，用户也能在文件里看到有哪些项可改
-    if (dirty) save();
-}
-
-bool Setting::loadConfig()
-{
     if (std::filesystem::exists(configPath)) {
-        auto content = Util::readTextFile(configPath);
+        auto content = Ling::Util::readFileText(configPath);
+        if (content.empty() || content.find_first_not_of(L" \t\r\n") == std::wstring::npos) {
+            initDefaultConfig();
+            save();
+            WinApi::init();
+            return;
+        }
         JsonObject obj{ nullptr };
-        // 用 TryParse 而不是 Parse：后者解析失败是抛 winrt::hresult_error，
-        // 空文件、写坏的 JSON、根节点不是对象（比如一个数组）都会失败，这里一律当没读到
         if (JsonObject::TryParse(content, obj)) {
             configObj = obj;
-            WinApi::init();
-            return true;
-        }
-        MessageBox(nullptr, L"config.json parse error，use default config", L"Translator", MB_OK | MB_ICONWARNING);
-    }
-    configObj = JsonObject::Parse(defaultConfig); //字面量，不会失败
-    WinApi::init();
-    return false;
-}
 
-bool Setting::ensureDefaults()
-{
-    auto def = JsonObject::Parse(defaultConfig);
-    bool dirty{ false };
-    for (auto&& group : def) {                                   //common / shortcutKey
-        auto name = group.Key();
-        auto defObj = group.Value().GetObject();
-        // 带默认值的重载：这一层缺了、或者被手工改成了字符串之类的非对象，都返回 nullptr
-        auto obj = configObj.GetNamedObject(name, nullptr);
-        if (!obj) {
-            configObj.SetNamedValue(name, defObj);
-            dirty = true;
-            continue;
+            return;
         }
-        for (auto&& item : defObj) {
-            if (obj.HasKey(item.Key())) continue;                 //用户自己的值一概不动
-            obj.SetNamedValue(item.Key(), item.Value());
-            dirty = true;
-        }
+        MessageBox(nullptr, L"config.json parse error，use default config", L"ScreenCapture", MB_OK | MB_ICONWARNING);
     }
-    return dirty;
+    initDefaultConfig();
+    WinApi::init();
 }
 
 Setting::~Setting()
@@ -174,9 +142,6 @@ std::filesystem::path Setting::initDataPath()
 
 std::filesystem::path Setting::initConfigPath()
 {
-    // 与插件的查找顺序一致（见 Util.cpp 里的 findImageReader）：先看 exe 同目录。
-    // 只有那份文件本来就存在时才认它 —— 不存在就不要在程序目录里新建，
-    // 装在 Program Files 下时那儿通常没有写权限，况且默认位置该是 appdata
     wchar_t buffer[MAX_PATH]{};
     GetModuleFileName(nullptr, buffer, MAX_PATH);
     auto path = std::filesystem::path{ buffer }.parent_path().append(L"config.json");
@@ -189,6 +154,13 @@ void Setting::save()
 {
     std::wstring str{ configObj.Stringify() };
     Ling::Util::saveFile(configPath.wstring(), str);
+}
+
+void Setting::initDefaultConfig()
+{
+    auto [pData, size] = Ling::Util::getRes(L"config.json");
+    auto str = Ling::Util::readTextFromBytes(pData, size);
+    configObj = JsonObject::Parse(str);
 }
 
 long long Setting::getUpdateCheckDay()

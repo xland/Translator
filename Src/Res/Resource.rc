@@ -3,6 +3,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 1 ICON "logo.ico"
 icon.ttf RCDATA "iconfont.ttf"
+config.json RCDATA "config.json"
 
 
 // 配置可执行文件产品信息

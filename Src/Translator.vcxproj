@@ -162,7 +162,9 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Adapter\AdapterBase.cpp" />
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Adapter\BaiDu.cpp" />
     <ClCompile Include="ClipboardText.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
@@ -191,7 +193,9 @@
     <Image Include="Res\logo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Adapter\AdapterBase.h" />
     <ClInclude Include="App.h" />
+    <ClInclude Include="Adapter\BaiDu.h" />
     <ClInclude Include="ClipboardText.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Setting.h" />
@@ -211,6 +215,9 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\config.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

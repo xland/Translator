@@ -29,15 +29,12 @@ private:
 	// 默认配置，一律不抛异常 —— 往 exe 目录里丢个空的 config.json 就该能用起来。
 	// 返回是否真的从文件里读到了配置（没读到就说明内存里这份是默认值，得落盘补上）
 	bool loadConfig();
-	// 默认配置里有、当前配置里缺的键，补齐。老版本写下的配置文件、用户手工改坏的配置文件
-	// 都可能缺键，而代码里有几处是直接按名字取的，缺一个就抛异常。
-	// 返回是否补过东西 —— 补过就得落盘
-	bool ensureDefaults();
 	std::filesystem::path initDataPath();
 	// 决定配置文件用哪一份：exe 同目录有 config.json 就用它（绿色版，配置跟着程序走），
 	// 否则用 %appdata%\Translator\config.json。二者只认一个，读哪儿就写哪儿。
 	std::filesystem::path initConfigPath();
 	void save();
+	void initDefaultConfig();
 private:
 	const std::filesystem::path dataPath;
 	// 必须声明在 dataPath 之后：initConfigPath 找不到 exe 同目录的配置时要回落到 dataPath 上，
