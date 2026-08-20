@@ -11,7 +11,7 @@ namespace {
     constexpr int capShortcutMsgId{ 100 };
     // 配置文件的默认内容。空文件、坏 JSON、缺键都拿它兜底，所以这里列出的每一项
     // 都是代码里会直接按名字取的（见 getLang / getAutoStart / initShortcutKeys）
-    constexpr std::wstring_view defaultConfig{ LR"""({"common":{"autoStart":false,"language":"zh-CN"},"shortcutKey":{"translate":"Ctrl+Alt+Z"}})""" };
+    constexpr std::wstring_view defaultConfig{ LR"""({"common":{"autoStart":false},"shortcutKey":{"translate":"Ctrl+Alt+Z"}})""" };
 }
 
 

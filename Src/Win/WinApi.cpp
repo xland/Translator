@@ -141,7 +141,7 @@ LRESULT WinApi::onHitTest(const POINT pos)
 	if (pt.x > 0 && pt.y > 0 && pt.x < w - 32 * dpi && pt.y < 40 * dpi) {
 		return HTCAPTION;
 	}
-	if (pt.x > 0 && pt.y > 40 * 4 * dpi && pt.x < 120 * dpi && pt.y < h) {
+	if (pt.x > 0 && pt.y > 40*5*dpi && pt.x < 160 * dpi && pt.y < h) {
 		return HTCAPTION;
 	}
 	return HTCLIENT;
