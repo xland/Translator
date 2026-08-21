@@ -12,8 +12,8 @@ using namespace winrt::Windows::Storage::Streams;
 
 JsonObject BaiDu::translate(const std::wstring& text)
 {
-    auto appId = Setting::get()->getApiConfig(L"baidu", L"appId");
-    auto apiKey = Setting::get()->getApiConfig(L"baidu", L"apiKey");
+    auto appId = Setting::get()->getApiConfig(L"BaiDu", L"appId");
+    auto apiKey = Setting::get()->getApiConfig(L"BaiDu", L"apiKey");
     if (appId.empty() || apiKey.empty()) {
         throw std::runtime_error("Baidu API credentials not configured");
     }
