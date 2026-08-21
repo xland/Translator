@@ -197,6 +197,7 @@ void Setting::initShortcutKeys()
     lingApp->onHotKey.add([this](UINT msg) {
         if (msg == capShortcutMsgId) {
             auto result = ClipboardText::grab();
+            //MessageBox(nullptr, result.text.data(), L"系统提示", MB_OK | MB_ICONWARNING);
             if (result.ok() && !result.text.empty()) {
                 BaiDu baidu;
                 auto translated = baidu.translate(result.text);

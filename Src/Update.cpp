@@ -276,9 +276,6 @@ void Update::checkLater()
 	}
 	if (checked || checkTimer) return;
 	auto lingApp = Ling::App::get();
-	if (!lingApp) return;
-	//用完即走模式：人家就是要截一张图就退，别在这种一次性进程里搞后台请求
-	if (lingApp->args[L"--auto-quit"] == L"true") return;
 	if (Setting::get()->getUpdateCheckDay() >= today()) return; //今天查过了
 	// 空闲不代表用户走开了，很可能马上又要截一张。等 15 秒再动手，
 	// 这段时间里又开始干活了就作罢（见 onCheckTimer）

@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "BaiDu.h"
 #include "../Setting.h"
 #include <winrt/Windows.Foundation.h>
@@ -15,7 +15,8 @@ JsonObject BaiDu::translate(const std::wstring& text)
     auto appId = Setting::get()->getApiConfig(L"BaiDu", L"appId");
     auto apiKey = Setting::get()->getApiConfig(L"BaiDu", L"apiKey");
     if (appId.empty() || apiKey.empty()) {
-        throw std::runtime_error("Baidu API credentials not configured");
+        std::wstring str = L"appId apiKey not set";
+        MessageBox(nullptr, str.data(), L"系统提示", MB_OK | MB_ICONWARNING);
     }
     JsonObject body;
     body.SetNamedValue(L"appid", JsonValue::CreateStringValue(appId));
@@ -30,17 +31,19 @@ JsonObject BaiDu::translate(const std::wstring& text)
     request.Content(content);
     auto response = httpClient.SendRequestAsync(request).get();
     if (!response.IsSuccessStatusCode()) {
-        throw std::runtime_error("HTTP request failed with status: " + 
-            std::to_string(static_cast<int>(response.StatusCode())));
+        auto str = L"HTTP request failed with status: " + std::to_wstring(static_cast<int>(response.StatusCode()));
+        MessageBox(nullptr, str.data(), L"系统提示", MB_OK | MB_ICONWARNING);
     }
     auto responseBody = response.Content().ReadAsStringAsync().get();
     auto responseStr = std::wstring(responseBody);
     JsonObject responseObj;
     if (!JsonObject::TryParse(responseStr, responseObj)) {
-        throw std::runtime_error("Failed to parse response JSON");
+        std::wstring str = L"Failed to parse response JSON";
+        MessageBox(nullptr, str.data(), L"系统提示", MB_OK | MB_ICONWARNING);
     }
     if (responseObj.HasKey(L"error_code")) {
-        throw std::runtime_error("Failed to parse response JSON");
+        std::wstring str = L"response JSON has error code";
+        MessageBox(nullptr, str.data(), L"系统提示", MB_OK | MB_ICONWARNING);
     }
     auto arr = responseObj.GetNamedArray(L"trans_result");
     return arr.GetObjectAt(0);
