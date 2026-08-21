@@ -62,7 +62,7 @@ void WinApi::onCreated()
 	closeBtn->setPosition(Ling::Edge::Top, 0);
 	closeBtn->setHoverColor(0xFFFFFFFF);
 	closeBtn->setHoverBg(0xE81123FF);
-	closeBtn->setText(L"\ue62d");
+	closeBtn->setText(L"\ue6e7");
 	closeBtn->setFontFamily(L"icon");
 	closeBtn->onClick.add([](Ling::Button* btn) {
 		btn->win->close();

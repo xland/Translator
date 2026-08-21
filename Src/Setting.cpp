@@ -183,7 +183,6 @@ void Setting::setUpdateCheckDay(long long day)
 {
     auto common = configObj.GetNamedObject(L"common", nullptr);
     if (!common) return;
-    // 这项不写进 defaultConfig：它是程序自己的记账，不是给用户改的配置
     common.SetNamedValue(L"updateCheckDay", JsonValue::CreateNumberValue(static_cast<double>(day)));
     save();
 }
@@ -191,7 +190,6 @@ void Setting::setUpdateCheckDay(long long day)
 void Setting::initShortcutKeys()
 {
     auto lingApp = Ling::App::get();
-    // 取不到就用默认的那个组合：热键注册不上顶多是快捷键不好用，不该让程序起不来
     std::wstring capStr{ getShortcutKey(L"cap") };
     if (capStr.empty()) capStr = L"Ctrl+Alt+Z";
     lingApp->regHotKey(capStr, capShortcutMsgId);
@@ -200,14 +198,9 @@ void Setting::initShortcutKeys()
         if (msg == capShortcutMsgId) {
             auto result = ClipboardText::grab();
             if (result.ok() && !result.text.empty()) {
-                try {
-                    BaiDu baidu;
-                    auto translated = baidu.translate(result.text);
-                    new WinResult(translated);
-                }
-                catch (...) {
-                    // 翻译失败，暂时不处理
-                }
+                BaiDu baidu;
+                auto translated = baidu.translate(result.text);
+                new WinResult(translated);
             }
         }
     });
