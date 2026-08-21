@@ -10,7 +10,7 @@ using namespace winrt::Windows::Web::Http;
 using namespace winrt::Windows::Web::Http::Headers;
 using namespace winrt::Windows::Storage::Streams;
 
-std::wstring BaiDu::translate(const std::wstring& text)
+JsonObject BaiDu::translate(const std::wstring& text)
 {
     auto appId = Setting::get()->getApiConfig(L"baidu", L"appId");
     auto apiKey = Setting::get()->getApiConfig(L"baidu", L"apiKey");
@@ -24,7 +24,8 @@ std::wstring BaiDu::translate(const std::wstring& text)
     body.SetNamedValue(L"appid", JsonValue::CreateStringValue(appId));
     body.SetNamedValue(L"q", JsonValue::CreateStringValue(text));
     body.SetNamedValue(L"from", JsonValue::CreateStringValue(L"auto"));
-    body.SetNamedValue(L"to", JsonValue::CreateStringValue(L"en"));
+    auto to = isChinese(text) ? L"en" : L"zh";
+    body.SetNamedValue(L"to", JsonValue::CreateStringValue(to));
 
     // 创建 HTTP 客户端和请求
     HttpClient httpClient;
@@ -56,13 +57,9 @@ std::wstring BaiDu::translate(const std::wstring& text)
         throw std::runtime_error("Failed to parse response JSON");
     }
 
-    // 提取翻译结果（根据实际 API 响应结构调整）
-    // 假设响应格式为 {"result": "翻译结果"} 或类似结构
-    // 这里需要根据百度翻译 API 的实际返回格式调整
-    if (responseObj.HasKey(L"result")) {
-        return std::wstring(responseObj.GetNamedString(L"result"));
+    if (responseObj.HasKey(L"error_code")) {
+        throw std::runtime_error("Failed to parse response JSON");
     }
-
-    // 如果没有 result 字段，返回原始响应供调试
-    return responseStr;
+    auto arr = responseObj.GetNamedArray(L"trans_result");
+    return arr.GetObjectAt(0);
 }

@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "WinResult.h"
 
-WinResult::WinResult(const std::wstring& source, const std::wstring& result)
-	:Ling::WinBase(), sourceText(source), resultText(result)
+WinResult::WinResult(JsonObject obj)
+	:Ling::WinBase(), obj{obj}
 {
 	setTitle(L"翻译结果");
 	setSize(500, 320);
@@ -57,7 +57,10 @@ void WinResult::onCreated()
 		sourceBox->setPadding(8.f);
 		sourceBox->setBg(0xFFFFFFFF);
 		sourceBox->setBorder(1.f, 0xD9D9D9FF);
-		sourceBox->setText(sourceText);
+		sourceBox->setFlexShrink(1.f);
+		sourceBox->setHeight(0.f);
+		std::wstring str{ obj.GetNamedString(L"src") };
+		sourceBox->setText(str);
 	}
 	{
 		auto box = body->makeChild<Ling::Node>();
@@ -72,9 +75,13 @@ void WinResult::onCreated()
 		resultBox->setPadding(8.f);
 		resultBox->setBg(0xFFFFFFFF);
 		resultBox->setBorder(1.f, 0xD9D9D9FF);
-		resultBox->setText(resultText);
+		resultBox->setFlexShrink(1.f);
+		resultBox->setHeight(0.f);
+		std::wstring str{ obj.GetNamedString(L"dst") };
+		resultBox->setText(str);
 	}
 	show();
+	SetForegroundWindow(hwnd);
 }
 
 LRESULT WinResult::onHitTest(const POINT pos)

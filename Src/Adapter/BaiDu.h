@@ -1,8 +1,9 @@
 #pragma once
 #include "AdapterBase.h"
+#include <include/Ling.h>
 class BaiDu :public AdapterBase
 {
 public:
-	std::wstring translate(const std::wstring& text) override;
+	JsonObject translate(const std::wstring& text) override;
 };
 

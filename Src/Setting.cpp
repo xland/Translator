@@ -41,6 +41,15 @@ void Setting::init()
 {
     auto ptr = new Setting();
     setting.reset(ptr);
+    if ((!setting->getApiConfig(L"BaiDu", L"appId").empty() && !setting->getApiConfig(L"BaiDu", L"apiKey").empty())) {
+        return;
+    }
+    if (!setting->getApiConfig(L"HuoShan", L"accessKeyID").empty() && !setting->getApiConfig(L"HuoShan", L"secretAccessKey").empty()) {
+        return;
+    }
+    if (!setting->getApiConfig(L"ALi", L"accessKeyID").empty()) {
+        return;
+    }
     WinApi::init();
 }
 
@@ -194,7 +203,7 @@ void Setting::initShortcutKeys()
                 try {
                     BaiDu baidu;
                     auto translated = baidu.translate(result.text);
-                    new WinResult(result.text, translated);
+                    new WinResult(translated);
                 }
                 catch (...) {
                     // 翻译失败，暂时不处理

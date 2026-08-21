@@ -63,13 +63,16 @@
     <ClCompile Include="Win\WinApiBaiDu.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Win\WinApiTengXun.cpp">
+    <ClCompile Include="Win\WinApiHuoShan.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Win\WinApiYouDao.cpp">
+    <ClCompile Include="Win\WinApiXiaoNiu.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Adapter\BaiDu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Win\WinResult.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Adapter\AdapterBase.cpp">
@@ -123,7 +126,7 @@
     <ClInclude Include="ClipboardText.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Win\WinApiYouDao.h">
+    <ClInclude Include="Win\WinApiXiaoNiu.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Win\WinApi.h">
@@ -135,13 +138,16 @@
     <ClInclude Include="Win\WinApiBaiDu.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Win\WinApiTengXun.h">
+    <ClInclude Include="Win\WinApiHuoShan.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Adapter\BaiDu.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Adapter\AdapterBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Win\WinResult.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

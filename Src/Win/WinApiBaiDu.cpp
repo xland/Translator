@@ -29,7 +29,6 @@ WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
         border->setHeight(1.f);
         border->setBg(0xE0E0E0FF);
     }
-
     {
         auto box = makeChild<Ling::Node>();
         box->setHeight(39.f);
@@ -124,6 +123,20 @@ WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
         border->setBg(0xE0E0E0FF);
     }
 
+    {
+        auto box = makeChild<Ling::Node>();
+        box->setHeight(39.f);
+        box->setFlexDirection(Ling::FlexDirection::Row);
+        box->setAlignItems(Ling::Align::Center);
+        auto label = box->makeChild<Ling::Label>();
+        label->setText(L"每月100万字符免费额度，用完将根据优先级使用其他引擎");
+        label->setHeightPercent(100.f);
+        label->setJustifyContent(Ling::Justify::Center);
+        label->setFlexGrow(1.f);
+        auto border = makeChild<Ling::Node>();
+        border->setHeight(1.f);
+        border->setBg(0xE0E0E0FF);
+    }
 }
 
 WinApiBaiDu::~WinApiBaiDu()

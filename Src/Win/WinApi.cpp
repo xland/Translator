@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "WinApi.h"
 #include "WinApiBaiDu.h"
-#include "WinApiTengXun.h"
-#include "WinApiYouDao.h"
+#include "WinApiXiaoNiu.h"
+#include "WinApiHuoShan.h"
 #include "WinApiALi.h"
 
 std::unique_ptr<WinApi> winApi;
@@ -72,7 +72,7 @@ void WinApi::onCreated()
 
 void WinApi::initMenuItems(Ling::Node* menuBox)
 {
-	std::vector<std::wstring> menuNames = { L"百度", L"腾讯", L"有道", L"阿里" };
+	std::vector<std::wstring> menuNames = { L"百度", L"火山", L"阿里", L"小牛" };
 	for (size_t i = 0; i < menuNames.size(); i++)
 	{
 		auto menuItem = menuBox->makeChild<Ling::Button>();
@@ -116,13 +116,13 @@ void WinApi::onMenuItemClick(Ling::Button* menuItem)
 		content = body->makeChild<WinApiBaiDu>();
 	}
 	else if (menuIndex == 1) {
-		content = body->makeChild<WinApiTengXun>();
+		content = body->makeChild<WinApiHuoShan>();
 	}
 	else if (menuIndex == 2) {
-		content = body->makeChild<WinApiYouDao>();
+		content = body->makeChild<WinApiALi>();
 	}
 	else if (menuIndex == 3) {
-		content = body->makeChild<WinApiALi>();
+		content = body->makeChild<WinApiXiaoNiu>();
 	}
 	content->setFlexGrow(1.0);
 	content->setHeightPercent(100.f);

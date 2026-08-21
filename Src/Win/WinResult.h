@@ -1,18 +1,19 @@
 #pragma once
 #include <include/Ling.h>
 
+using namespace winrt::Windows::Data::Json;
+
 class WinResult :public Ling::WinBase
 {
 public:
-	WinResult(const std::wstring& source, const std::wstring& result);
+	WinResult(JsonObject obj);
 	~WinResult();
 private:
 	void onCreated() override;
 	LRESULT onHitTest(const POINT pos) override;
 	void onMinMaxInfo(MINMAXINFO* mmi) override;
 private:
-	std::wstring sourceText;
-	std::wstring resultText;
+	JsonObject obj;
 	Ling::TextBox* sourceBox{ nullptr };
 	Ling::TextBox* resultBox{ nullptr };
 };

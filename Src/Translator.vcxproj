@@ -162,6 +162,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Adapter\AdapterBase.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Adapter\BaiDu.cpp" />
     <ClCompile Include="ClipboardText.cpp" />
@@ -178,8 +179,8 @@
     <ClCompile Include="Win\WinApi.cpp" />
     <ClCompile Include="Win\WinApiALi.cpp" />
     <ClCompile Include="Win\WinApiBaiDu.cpp" />
-    <ClCompile Include="Win\WinApiTengXun.cpp" />
-    <ClCompile Include="Win\WinApiYouDao.cpp" />
+    <ClCompile Include="Win\WinApiHuoShan.cpp" />
+    <ClCompile Include="Win\WinApiXiaoNiu.cpp" />
     <ClCompile Include="Win\WinResult.cpp" />
     <ClCompile Include="Win\WinSettingAbout.cpp" />
     <ClCompile Include="Win\WinSettingCommon.cpp" />
@@ -206,8 +207,8 @@
     <ClInclude Include="Win\WinApi.h" />
     <ClInclude Include="Win\WinApiALi.h" />
     <ClInclude Include="Win\WinApiBaiDu.h" />
-    <ClInclude Include="Win\WinApiTengXun.h" />
-    <ClInclude Include="Win\WinApiYouDao.h" />
+    <ClInclude Include="Win\WinApiHuoShan.h" />
+    <ClInclude Include="Win\WinApiXiaoNiu.h" />
     <ClInclude Include="Win\WinResult.h" />
     <ClInclude Include="Win\WinSettingAbout.h" />
     <ClInclude Include="Win\WinSettingCommon.h" />
