@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Win/WinSetting.h"
 #include "Win/WinApi.h"
+#include "Win/WinTranslate.h"
 #include "Setting.h"
 
 namespace {
@@ -10,6 +11,7 @@ namespace {
 	static constexpr UINT apiMsg = 162;
 	static constexpr UINT settingMsg = 163;
 	static constexpr UINT exitMsg = 164;
+	static constexpr UINT translateMsg = 165;
 }
 
 Tray::Tray()
@@ -46,11 +48,16 @@ Tray* Tray::get()
 void Tray::onTrayRightClick()
 {
 	auto menu = CreatePopupMenu();
+	AppendMenu(menu, MF_STRING, translateMsg, L"翻译");
 	AppendMenu(menu, MF_STRING, apiMsg, L"API");
 	AppendMenu(menu, MF_STRING, settingMsg, L"设置");
 	AppendMenu(menu, MF_STRING, exitMsg, L"退出");
 	auto menuId = Ling::App::get()->popupMenu(menu);
-	if (menuId == apiMsg)
+	if (menuId == translateMsg)
+	{
+		new WinTranslate();
+	}
+	else if (menuId == apiMsg)
 	{
 		WinApi::init();
 	}

@@ -186,6 +186,7 @@
     <ClCompile Include="Win\WinSettingCommon.cpp" />
     <ClCompile Include="Win\WinSetting.cpp" />
     <ClCompile Include="Win\WinSettingShortcut.cpp" />
+    <ClCompile Include="Win\WinTranslate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Res\Resource.rc" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Win\WinSettingCommon.h" />
     <ClInclude Include="Win\WinSetting.h" />
     <ClInclude Include="Win\WinSettingShortcut.h" />
+    <ClInclude Include="Win\WinTranslate.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Res\iconfont.ttf" />

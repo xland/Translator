@@ -78,6 +78,9 @@
     <ClCompile Include="Adapter\AdapterBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Win\WinTranslate.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Res\Resource.rc">
@@ -148,6 +151,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Win\WinResult.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Win\WinTranslate.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
