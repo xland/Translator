@@ -48,9 +48,9 @@ WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
         appIdBox->setBg(0xFCFCFCFF);
         appIdBox->setVerticalCenter(true);
         appIdBox->setBorder(1.f, 0xD9D9D9FF);
-        appIdBox->setText(Setting::get()->getApiConfig(L"baidu", L"appId"));
+        appIdBox->setText(Setting::get()->getApiConfig(L"BaiDu", L"appId"));
         onAppIdChangeToken = appIdBox->onTextChanged.add([this](Ling::TextBox* tb, const std::wstring& text) {
-            Setting::get()->setApiConfig(L"baidu", L"appId", text);
+            Setting::get()->setApiConfig(L"BaiDu", L"appId", text);
         });
 
         auto border = makeChild<Ling::Node>();
@@ -77,9 +77,9 @@ WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
         apiKeyBox->setBg(0xFCFCFCFF);
         apiKeyBox->setVerticalCenter(true);
         apiKeyBox->setBorder(1.f, 0xD9D9D9FF);
-        apiKeyBox->setText(Setting::get()->getApiConfig(L"baidu", L"apiKey"));
+        apiKeyBox->setText(Setting::get()->getApiConfig(L"BaiDu", L"apiKey"));
         onApiKeyChangeToken = apiKeyBox->onTextChanged.add([this](Ling::TextBox* tb, const std::wstring& text) {
-            Setting::get()->setApiConfig(L"baidu", L"apiKey", text);
+            Setting::get()->setApiConfig(L"BaiDu", L"apiKey", text);
         });
 
         auto border = makeChild<Ling::Node>();
@@ -105,13 +105,13 @@ WinApiBaiDu::WinApiBaiDu(Ling::WinBase* parent) :Ling::Node(parent)
         priorityBox->setBg(0xFCFCFCFF);
         priorityBox->setVerticalCenter(true);
         priorityBox->setBorder(1.f, 0xD9D9D9FF);
-        auto orderVal = Setting::get()->getApiConfig(L"baidu", L"order");
+        auto orderVal = Setting::get()->getApiConfig(L"BaiDu", L"order");
         priorityBox->setText(orderVal.empty() ? L"100" : orderVal);
         onPriorityChangeToken = priorityBox->onTextChanged.add([this](Ling::TextBox* tb, const std::wstring& text) {
             if (text.empty()) return;
             try {
                 std::stol(text);
-                Setting::get()->setApiConfig(L"baidu", L"order", text);
+                Setting::get()->setApiConfig(L"BaiDu", L"order", text);
             }
             catch (...) {
                 // 输入的不是数字，不保存
