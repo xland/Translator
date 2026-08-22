@@ -17,7 +17,7 @@ WinSetting::WinSetting() :Ling::WinBase()
 	onDestroy.add([]() {
 		Ling::App::get()->dq.TryEnqueue([]() { winSetting.reset(); });
 	});
-	setTitle(L"setting.title");
+	setTitle(L"系统设置");
 	setSize(680, 560);
 	setCenter();
 	createNativeWindow();
